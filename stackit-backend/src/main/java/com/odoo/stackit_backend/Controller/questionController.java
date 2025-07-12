@@ -4,13 +4,13 @@ import com.odoo.stackit_backend.Entities.Question;
 import com.odoo.stackit_backend.Entities.dto.QuestionDTO;
 import com.odoo.stackit_backend.service.questionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/questions")
+
 public class questionController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class questionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(QuestionDTO ques){
+    public ResponseEntity<String> create(@RequestBody QuestionDTO ques){
         qs.create(ques);
         return ResponseEntity.ok("question created");
     }
@@ -40,5 +40,16 @@ public class questionController {
     public ResponseEntity<Question> getQuestionById(@PathVariable Long id) {
         return ResponseEntity.ok(qs.getQuestionById(id));
     }
+    @GetMapping("/questions")
+    public Page<Question> getQuestions(
+            @RequestParam(required = false) String tag,
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "createdAt") String sort,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        return qs.getFilteredQuestions(tag, search, sort, page, size);
+    }
+
 
 }

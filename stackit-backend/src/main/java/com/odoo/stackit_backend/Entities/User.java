@@ -1,28 +1,29 @@
 package com.odoo.stackit_backend.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String userID;
+    private Long id;
+
+    @Column(unique = true, nullable = false)
     private String username;
 
-    public String getUserID() {
-        return userID;
-    }
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @Column(nullable = false)
+    private String email;
+
+    // Add password field if you plan to implement login (hashed)
+    private String password;
+
+    // Other fields like roles, enabled, etc. can be added later
 }
