@@ -16,14 +16,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 120)
     private String email;
 
-    // Add password field if you plan to implement login (hashed)
+    @Column(nullable = false, length = 100)
     private String password;
 
-    // Other fields like roles, enabled, etc. can be added later
+    @Column(nullable = false, length = 20)
+    private String role; // No default — controller decides based on username logic
 }
