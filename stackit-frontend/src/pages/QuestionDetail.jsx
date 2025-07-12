@@ -134,13 +134,11 @@ const QuestionDetail = () => {
         ))}
       </div>
 
-      {/* Question Description */}
       <div
         className="prose mb-6"
         dangerouslySetInnerHTML={{ __html: question.description }}
       />
 
-      {/* Answers */}
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">
           Answers ({answers.length})
@@ -194,7 +192,6 @@ const QuestionDetail = () => {
         })}
       </div>
 
-      {/* Answer Form */}
       <div>
         <h2 className="text-2xl font-semibold mb-4">Your Answer</h2>
         <JoditEditor

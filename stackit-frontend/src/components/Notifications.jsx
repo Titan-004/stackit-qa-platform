@@ -24,10 +24,8 @@ export default function Notifications() {
 
   const toggleDropdown = () => setIsOpen((open) => !open);
 
-  // Count unread notifications
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  // Close dropdown on outside click
   const dropdownRef = useRef();
 
   useEffect(() => {
@@ -43,7 +41,6 @@ export default function Notifications() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Mark all as read when dropdown opens
   useEffect(() => {
     if (isOpen) {
       setNotifications((prev) =>
@@ -90,7 +87,7 @@ export default function Notifications() {
               <li
                 key={note.id}
                 className={`p-3 border-b border-gray-200 ${
-                  note.isRead ? "bg-white" : "bg-gray-100 font-semibold"
+                  note.isRead ? "bg-fuchsia-800" : "bg-gray-100 font-semibold"
                 }`}
               >
                 {note.text}

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Notifications from "./Notifications"; // make sure this exists
+import AuthContext from "../context/AuthContext";
+import Notifications from "./Notifications";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "light"
-  );
+  const { user, logout } = useContext(AuthContext);
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
 
   useEffect(() => {
     if (theme === "dark") {
@@ -27,17 +27,30 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-6">
-        {/* Links */}
         <div>
           <Link to="/ask" className="mr-4 hover:underline">
             Ask
           </Link>
-          <Link to="/login" className="hover:underline">
-            Login
-          </Link>
+
+          {user ? (
+            <>
+              <span className="mr-4">Hello, {user.username}</span>
+              <button onClick={logout} className="hover:underline">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="mr-4 hover:underline">
+                Login
+              </Link>
+              <Link to="/signup" className="hover:underline">
+                Register
+              </Link>
+            </>
+          )}
         </div>
 
-        {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
           aria-label="Toggle Theme"
@@ -45,7 +58,6 @@ const Navbar = () => {
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
           {theme === "light" ? (
-            // Moon icon (dark mode)
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -54,14 +66,9 @@ const Navbar = () => {
               stroke="currentColor"
               strokeWidth={2}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
             </svg>
           ) : (
-            // Sun icon (light mode)
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -79,7 +86,6 @@ const Navbar = () => {
           )}
         </button>
 
-        {/* Notifications */}
         <Notifications />
       </div>
     </nav>

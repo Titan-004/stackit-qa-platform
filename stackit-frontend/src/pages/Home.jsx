@@ -66,14 +66,12 @@ function QuestionsList() {
   const [sortOrder, setSortOrder] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Extract unique tags for filter UI
   const allTags = useMemo(() => {
     const tagsSet = new Set();
     mockQuestions.forEach((q) => q.tags.forEach((t) => tagsSet.add(t)));
     return Array.from(tagsSet).sort();
   }, []);
 
-  // Filter questions by search and selected tag
   const filteredQuestions = useMemo(() => {
     let filtered = mockQuestions;
 
